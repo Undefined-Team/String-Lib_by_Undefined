@@ -6,6 +6,7 @@
 #include <ud_array.h>
 
 // Macro
+# define    ud_is_white_space(c)   ((c) == ' ' || (c) == '\t' || (c) == '\n' || (c) == '\v' || (c) == '\f' || (c) == '\0')
 
 // Structures
 
@@ -20,5 +21,6 @@ ud_arr      *ud_str_fjoin(ud_arr *head, ud_arr *tail);
 ud_arr      *ud_str_fsub(ud_arr *str, size_t start, size_t len);
 ud_arr      *ud_str_join(ud_arr *head, ud_arr *tail);
 ud_arr      *ud_str_sub(ud_arr *str, size_t start, size_t len);
+size_t      ud_str_len(ud_arr *str);
 
 #endif
