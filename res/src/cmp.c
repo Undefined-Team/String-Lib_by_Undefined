@@ -10,9 +10,9 @@ int     ud_str_cmp(ud_arr *s1, ud_arr *s2)
         return -1;
     else if (!s2->val)
         return 1;
-    char    *s1_a = (char *)s1->val;
-    char    *s2_a = (char *)s2->val;
+    char    *a_s1 = (char *)s1->val;
+    char    *a_s2 = (char *)s2->val;
     
-    for (; *s1_a && *s2_a && *s1_a == *s2_a; s1_a++, s2_a++);
-    return (unsigned char)*s1_a - (unsigned char)*s2_a;
+    for (; *a_s1 && *a_s2 && *a_s1 == *a_s2; a_s1++, a_s2++);
+    return (unsigned char)*a_s1 - (unsigned char)*a_s2;
 }

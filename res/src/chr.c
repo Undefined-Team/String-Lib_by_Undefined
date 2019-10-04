@@ -6,10 +6,10 @@ int     ud_str_chr(ud_arr *str, char c)
         ud_ut_error("%s", "Null array provided.");
     if (!str->val)
         return -1;
-    char    *str_a = (char *)str->val;
+    char    *a_str = (char *)str->val;
 
-    for (; *str_a; ++str_a)
-        if (*str_a == c)
-            return str_a - (char *)str->val;
+    for (; *a_str; ++a_str)
+        if (*a_str == c)
+            return a_str - (char *)str->val;
     return -1;
 }

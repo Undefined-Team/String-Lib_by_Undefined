@@ -7,9 +7,9 @@ ud_arr  *ud_str_dup(ud_arr *str, size_t len)
     if (!str)
         ud_ut_error("%s", "Null array provided.");
     dup = ud_arr_init(sizeof(char), str->len);
-    char *dup_a = (char *)dup->val;
-    char *str_a = (char *)str->val;
-    for (ud_ut_count i = 0; i < len; ++i, ++dup_a, ++str_a)
-        *dup_a = *str_a;
+    char *a_dup = (char *)dup->val;
+    char *a_str = (char *)str->val;
+    for (ud_ut_count i = 0; i < len; ++i, ++a_dup, ++a_str)
+        *a_dup = *a_str;
     return (dup);
 }
