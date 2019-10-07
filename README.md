@@ -1,2 +1,2 @@
 # String Lib by Undefined
-Simple C lib for string
+C lib for string
