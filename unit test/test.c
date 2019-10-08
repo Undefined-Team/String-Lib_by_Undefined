@@ -33,24 +33,41 @@ int main(void)
     // ud_ut_time("%s", "All tests passed.");
 
     printf("%zd\n", UD_ARGS_LEN(int, 1, 2, 3));
-    return 0;
+    // return 0;
     char value[] = ",,2,";
     ud_arr  *str = ud_arr_new(sizeof(char), 4, value);
     ud_arr_print(str, char, "%c");
     ud_arr  *splitted = ud_str_split(str, ",");
     // printf("splitted len = %zd\n", splitted->len);
     ud_arr *before_test =  ud_arr_init(sizeof(char), 0);
-
+    printf("splitted:\n");
+    ud_arr_print(splitted, char, "|%c| ");
+    printf("before_test:\n");
+    ud_arr_print(before_test, char, "|%c| ");
     // ud_arr *test = ud_arr_init(0, 2);
-    ud_arr *test = ud_arr_set(ud_arr*, 2, splitted, before_test);
+    printf("add real = %p\n", splitted);
+    printf("auto:\n");
+    ud_arr *test = ud_arr_set(ud_arr*, splitted, before_test);
+    // printf("auto len = %zd\n", test->len);
     // ud_arr **val = (ud_arr**)test->val;
-    // val[0] = before_test;
-    // val[1] = splitted;
-    ud_arr *test_set = ud_arr_set(int, 2, 3);
-    ud_arr_print(test_set, int, "%d ");
+    // printf("elemt1 len = %zd\n", val[0]->len);
+    // ud_arr_print(val[0], char, "|%c| ");
 
     ud_arr_print(test, char, "|%c| ");
+    // ud_arr_rfree(test);
+
+    test = ud_arr_init(0, 2);
+    ud_arr **val = (ud_arr**)test->val;
+    val[0] = before_test;
+    val[1] = splitted;
+    printf("manual:\n");
+    ud_arr_print(test, char, "|%c| ");
     ud_arr_rfree(test);
+    // ud_arr *test_set = ud_arr_set(int, 2, 3);
+    // ud_arr_print(test_set, int, "%d ");
+
+
+
     // ud_arr_free(str);
     return 0;
 }
