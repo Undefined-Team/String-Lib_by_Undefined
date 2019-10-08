@@ -8,9 +8,9 @@ ud_arr  *ud_str_whitespace(ud_arr *str)
     char *a_str = (char*)str->val;
     if (!a_str || str->len == 0)
         return (str);
-    while (ud_is_white_space(a_str[i]))
+    while (ud_str_is_white_space(a_str[i]))
         i++;
-    while (ud_is_white_space(a_str[j]))
+    while (ud_str_is_white_space(a_str[j]))
         j--;
     return (ud_str_sub(str, i, j - i + 1));
 }
