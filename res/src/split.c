@@ -71,7 +71,7 @@ char                        **ud_str_split(char *str, char *sep)
         *ret = NULL;
         return ret;
     }
-    else if (!sep || !*sep) ud_ut_error("separator can't be null");
+    else if (!sep || !*sep) ud_ut_error("Separator can't be null");
     size_t              split_len   = 0;
     size_t              sep_len     = ud_str_len(sep);
     ud_str_split_len    *begin      = ud_str_split_get_len(str, sep, &split_len);
