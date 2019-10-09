@@ -1,13 +1,11 @@
 #include "ud_string.h"
 
-ud_arr  *ud_str_fill(char c, size_t len)
+char    *ud_str_fill(char c, size_t len)
 {
-    ud_arr  *str;
+    char    *str;
 
-    str = ud_arr_init(sizeof(char), len);
-    char *a_str = (char*)str->val;
-    for (ud_ut_count i = 0; i < len; i++, ++a_str)
-        *a_str = c;
-    *a_str = '\0';
+    UD_UT_PROT_MALLOC(str = ud_ut_malloc(sizeof(char) * (len + 1)));
+    ud_mem_set(str, c, len);
+    str[len] = '\0';
     return (str);
 }

@@ -5,28 +5,30 @@
 #include <ud_utils.h>
 
 // Macro
-# define                        ud_str_is_white_space(c)   ((c) == ' ' || (c) == '\t' || (c) == '\n' || (c) == '\v' || (c) == '\f' || (c) == '\0')
+# define ud_str_is_white_space(c)   ((c) == ' ' || (c) == '\t' || (c) == '\n' || (c) == '\v' || (c) == '\f' || (c) == '\0')
+# define ud_str_dup(str)            (ud_str_dup_l(str, 0))
+# define ud_str_fdup(str)           (ud_str_fdup_l(str, 0))
 
 // Structures
-typedef struct                  uds_str_split_len {
-    size_t                      len;
-    struct uds_str_split_len    *next;
-}                               ud_str_split_len;        
+typedef struct                      uds_str_split_len {
+    size_t                          len;
+    struct uds_str_split_len        *next;
+}                                   ud_str_split_len;        
 
 // Prototypes
-int                             ud_str_chr(ud_arr *str, char c);
-int                             ud_str_cmp(ud_arr *s1, ud_arr *s2);
-ud_arr                          *ud_str_ctoa(char c);
-ud_arr                          *ud_str_dup(ud_arr *str, size_t len);
-ud_arr                          *ud_str_fdup(ud_arr *str, size_t len);
-ud_arr                          *ud_str_fill(char c, size_t len);
-ud_arr                          *ud_str_fjoin(ud_arr *head, ud_arr *tail);
-ud_arr                          *ud_str_fsub(ud_arr *str, size_t start, size_t len);
-ud_arr                          *ud_str_join(ud_arr *head, ud_arr *tail);
-ud_arr                          *ud_str_sub(ud_arr *str, size_t start, size_t len);
-size_t                          ud_str_len(ud_arr *str);
-void                            ud_str_split_free_len(ud_str_split_len *begin);
-ud_str_split_len                *ud_str_split_get_len(char *val, char *sep, size_t *split_len);
-ud_arr                          *ud_str_split(ud_arr *str, char *sep);
+int                                 ud_str_chr(char *str, char c);
+int                                 ud_str_cmp(char *s1, char *s2);
+char                                *ud_str_ctoa(char c);
+char                                *ud_str_dup_l(char *str, size_t len);
+char                                *ud_str_fdup_l(char *str, size_t len);
+char                                *ud_str_fill(char c, size_t len);
+char                                *ud_str_fjoin(char *head, char *tail);
+char                                *ud_str_fsub(char *str, size_t start, size_t len);
+char                                *ud_str_join(char *head, char *tail);
+char                                *ud_str_sub(char *str, size_t start, size_t len);
+void                                ud_str_split_free_len(ud_str_split_len *begin);
+ud_str_split_len                    *ud_str_split_get_len(char *val, char *sep, size_t *split_len);
+char                                **ud_str_split(char *str, char *sep);
+size_t                              ud_str_len(char *str);
 
 #endif

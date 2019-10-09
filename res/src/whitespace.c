@@ -1,6 +1,6 @@
 #include "ud_string.h"
 
-ud_arr  *ud_str_whitespace(ud_arr *str)
+char    *ud_str_whitespace(char *str)
 {
     ud_ut_count     i = 0;
     ud_ut_count     j = ud_str_len(str) - 1;
