@@ -1,6 +1,6 @@
 #include "ud_string.h"
 
-char  *ud_str_dup_l(char *str, size_t len)
+char  *ud_str_ndup(char *str, size_t len)
 {
     char  *dup;
 
