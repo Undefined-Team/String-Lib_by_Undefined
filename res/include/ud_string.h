@@ -3,6 +3,7 @@
 
 // Lib
 #include <ud_utils.h>
+#include <ud_memory.h>
 
 // Macro
 # define ud_str_is_white_space(c)   ((c) == ' ' || (c) == '\t' || (c) == '\n' || (c) == '\v' || (c) == '\f' || (c) == '\0')

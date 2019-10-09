@@ -65,12 +65,16 @@ ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len
 char                        **ud_str_split(char *str, char *sep)
 {
     if (!str) return NULL;
-    else if (!*str) return ud_str_dup(str);
+    else if (!*str) 
+    {
+        char **ret = ud_ut_malloc(sizeof(char*)); 
+        *ret = NULL;
+        return ret;
+    }
     else if (!sep || !*sep) ud_ut_error("separator can't be null");
     size_t              split_len   = 0;
-    size_t              sep_len     = ud_ut_byte_len(sep);
-    char                *val        = (char*)str->val;
-    ud_str_split_len    *begin      = ud_str_split_get_len(val, sep, &split_len);
+    size_t              sep_len     = ud_str_len(sep);
+    ud_str_split_len    *begin      = ud_str_split_get_len(str, sep, &split_len);
     if (!split_len)     ud_str_dup(str);
     char                **new_arr   = ud_ut_malloc(sizeof(char*) * (split_len + 1));
     new_arr[split_len] = NULL;
@@ -80,9 +84,9 @@ char                        **ud_str_split(char *str, char *sep)
     {
         UD_UT_PROT_MALLOC(arr_str = ud_ut_malloc(sizeof(char) * (tmp->len + 1)));
         arr_str[tmp->len] = '\0';
-        val = ud_mem_cpy_rs(arr_str, val, tmp->len);
+        str = ud_mem_cpy_rs(arr_str, str, tmp->len);
         *arr_val = arr_str;
-        val += sep_len;
+        str += sep_len;
         ++arr_val;
     }
     ud_str_split_free_len(begin);
