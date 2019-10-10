@@ -68,8 +68,8 @@ char                        **ud_str_split(char *str, char *sep)
     else if (!*str) 
     {
         char **ret = ud_ut_malloc(sizeof(char*) * 2); 
-        *ret[0] = ud_str_dup("");
-        *ret[1] = NULL;
+        ret[0] = ud_str_dup("");
+        ret[1] = NULL;
         return ret;
     }
     else if (!sep || !*sep) ud_ut_error("Separator can't be null");
