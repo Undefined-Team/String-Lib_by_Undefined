@@ -71,9 +71,12 @@ int main(void)
     while (*splitted)
     {
         printf("split = |%s|\n", *splitted);
-        ud_ut_free(*splitted);
+        // ud_ut_free(*splitted);
         ++splitted;
     }
+    char *joined = ud_str_join(begin, "-");
+    printf("after join\n");
+    printf("|%s|\n", joined);
     ud_ut_free(begin);
     return 0;
 }
