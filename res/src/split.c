@@ -67,8 +67,9 @@ char                        **ud_str_split(char *str, char *sep)
     if (!str) return NULL;
     else if (!*str) 
     {
-        char **ret = ud_ut_malloc(sizeof(char*)); 
-        *ret = NULL;
+        char **ret = ud_ut_malloc(sizeof(char*) * 2); 
+        *ret[0] = ud_str_dup("");
+        *ret[1] = NULL;
         return ret;
     }
     else if (!sep || !*sep) ud_ut_error("Separator can't be null");
