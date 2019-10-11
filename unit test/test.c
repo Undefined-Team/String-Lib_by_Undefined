@@ -1,5 +1,4 @@
 #include <ud_string.h>
-#include <ud_array.h>
 #include <assert.h>
 
 int main(void)
@@ -78,5 +77,12 @@ int main(void)
     printf("after join\n");
     printf("|%s|\n", joined);
     ud_ut_free(begin);
+    printf("vjoin = |%s|\n", ud_str_vjoin("", "salut", "cava"));
+
+    char *mt1[3] = {"oui" , "non", NULL};
+    char *mt2[3] = {"si", "peut etre", NULL};
+    char **main_test[3] = {mt1, mt2, NULL};
+    char *joinedr = ud_str_vrjoin(main_test, " ; ", ", ");
+    printf("%s\n", joinedr);
     return 0;
 }
