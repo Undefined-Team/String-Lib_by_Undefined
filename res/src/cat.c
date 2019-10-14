@@ -13,5 +13,6 @@ char    *ud_str_cat(char *head, char *tail)
         *p_cat = *head;
     for (; *tail; ++p_cat, ++tail)
         *p_cat = *tail;
+    *p_cat = 0;
     return cat;
 }
