@@ -2,8 +2,6 @@
 # define UD_STRING_H
 
 // Lib
-// #include <ud_utils.h>
-// #include <ud_memory.h>
 #include <ud_pointer.h>
 
 // Macro

@@ -64,25 +64,27 @@ int main(void)
     // ud_arr_print(test_set, int, "%d ");
     // ud_arr_free(str);
 
-    char test[] = "JOHNY,salutJOHNY, caJOHNY, vaJOHNY,";
-    char **splitted = ud_str_split(test, "JOHNY,");
-    char **begin = splitted;
-    while (*splitted)
-    {
-        printf("split = |%s|\n", *splitted);
-        // ud_ut_free(*splitted);
-        ++splitted;
-    }
-    char *joined = ud_str_join(begin, "-");
-    printf("after join\n");
-    printf("|%s|\n", joined);
-    ud_ut_free(begin);
-    printf("vjoin = |%s|\n", ud_str_vjoin("", "salut", "cava"));
+    // char test[] = "JOHNY,salutJOHNY, caJOHNY, vaJOHNY,";
+    // char **splitted = ud_str_split(test, "JOHNY,");
+    // char **begin = splitted;
+    // while (*splitted)
+    // {
+    //     printf("split = |%s|\n", *splitted);
+    //     // ud_ut_free(*splitted);
+    //     ++splitted;
+    // }
+    // char *joined = ud_str_join(begin, "-");
+    // printf("after join\n");
+    // printf("|%s|\n", joined);
+    // ud_ut_free(begin);
+    // printf("vjoin = |%s|\n", ud_str_vjoin("", "salut", "cava"));
 
-    char *mt1[3] = {"oui" , "non", NULL};
-    char *mt2[3] = {"si", "peut etre", NULL};
-    char **main_test[3] = {mt1, mt2, NULL};
-    char *joinedr = ud_str_vrjoin(main_test, " ; ", ", ");
-    printf("%s\n", joinedr);
+    // char *mt1[3] = {"oui" , "non", NULL};
+    // char *mt2[3] = {"si", "peut etre", NULL};
+    // char **main_test[3] = {mt1, mt2, NULL};
+    // char *joinedr = ud_str_vrjoin(main_test, " ; ", ", ");
+    // printf("%s\n", joinedr);
+
+    
     return 0;
 }
