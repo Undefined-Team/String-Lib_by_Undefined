@@ -45,5 +45,7 @@ char                                *ud_str_rjoin_ctr(char **str, char **sep, ud
 size_t                              ud_str_len(char *str);
 char                                *ud_str_escape(char *str);
 char                                *ud_str_whitespace(char *str);
+void                                ud_str_cpy(char *dst, char *src);
+void                                ud_str_cpy_rd(char **dst, char *src);
 
 #endif
