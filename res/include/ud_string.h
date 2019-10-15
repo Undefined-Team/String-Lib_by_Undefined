@@ -10,11 +10,11 @@
 # define ud_str_fdup(str)           (ud_str_fndup(str, 0))
 
 
-# define ud_str_join(str, sep)      ud_str_join_call(str, sep, false)
-# define ud_str_fjoin(str, sep)     ud_str_join_call(str, sep, true)
+# define ud_str_join(str, sep)      ud_str_join_ctr(str, sep, false)
+# define ud_str_fjoin(str, sep)     ud_str_join_ctr(str, sep, true)
 
-# define ud_str_rjoin(str, sep)     ud_str_rjoin_call((char**)str, sep, false)
-# define ud_str_rfjoin(str, sep)    ud_str_rjoin_call((char**)str, sep, true)
+# define ud_str_rjoin(str, sep)     ud_str_rjoin_ctr((char**)str, sep, false)
+# define ud_str_rfjoin(str, sep)    ud_str_rjoin_ctr((char**)str, sep, true)
 
 # define ud_str_vjoin(sep, ...)     ({ char *str[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_join(str, sep); ret; })
 # define ud_str_vrjoin(str, ...)    ({ char *sep[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_rjoin(str, sep); ret; })
@@ -40,8 +40,8 @@ char                                *ud_str_sub(char *str, size_t start, size_t 
 void                                ud_str_split_free_len(ud_str_split_len *begin);
 ud_str_split_len                    *ud_str_split_get_len(char *val, char *sep, size_t *split_len);
 char                                **ud_str_split(char *str, char *sep);
-char                                *ud_str_join_call(char **str, char *sep, ud_bool need_free);
-char                                *ud_str_rjoin_call(char **str, char **sep, ud_bool need_free);
+char                                *ud_str_join_ctr(char **str, char *sep, ud_bool need_free);
+char                                *ud_str_rjoin_ctr(char **str, char **sep, ud_bool need_free);
 size_t                              ud_str_len(char *str);
 char                                *ud_str_escape(char *str);
 char                                *ud_str_whitespace(char *str);

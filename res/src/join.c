@@ -1,6 +1,6 @@
 #include "ud_string.h"
 
-char    *ud_str_join_call(char **str, char *sep, ud_bool need_free)
+char    *ud_str_join_ctr(char **str, char *sep, ud_bool need_free)
 {
     if (!str) return ud_str_dup("");  
     size_t sep_len = ud_str_len(sep);
@@ -40,12 +40,12 @@ char    *ud_str_join_call(char **str, char *sep, ud_bool need_free)
     return res;
 }
 
-char    *ud_str_rjoin_call(char **str, char **sep, ud_bool need_free)
+char    *ud_str_rjoin_ctr(char **str, char **sep, ud_bool need_free)
 {
     ++sep;
     char **str_tmp = str;
     if (*sep)
         for (; *str_tmp; ++str_tmp)
-            *str_tmp = ud_str_rjoin_call((char**)*str_tmp, sep, need_free);
-    return ud_str_join_call(str, *(sep - 1), need_free);
+            *str_tmp = ud_str_rjoin_ctr((char**)*str_tmp, sep, need_free);
+    return ud_str_join_ctr(str, *(sep - 1), need_free);
 }
