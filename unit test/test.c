@@ -64,27 +64,40 @@ int main(void)
     // ud_arr_print(test_set, int, "%d ");
     // ud_arr_free(str);
 
-    // char test[] = "JOHNY,salutJOHNY, caJOHNY, vaJOHNY,";
-    // char **splitted = ud_str_split(test, "JOHNY,");
-    // char **begin = splitted;
-    // while (*splitted)
-    // {
-    //     printf("split = |%s|\n", *splitted);
-    //     // ud_ut_free(*splitted);
-    //     ++splitted;
-    // }
-    // char *joined = ud_str_join(begin, "-");
-    // printf("after join\n");
-    // printf("|%s|\n", joined);
-    // ud_ut_free(begin);
-    // printf("vjoin = |%s|\n", ud_str_vjoin("", "salut", "cava"));
+    // Test split (0 leak)
+    char test[] = "JOHNY,salutJOHNY, caJOHNY, vaJOHNY,";
+    char **splitted = ud_str_split(test, "JOHNY,");
+    char **begin = splitted;
+    printf("split = ");
+    while (*splitted)
+    {
+        printf("[%s], ", *splitted);
+        ud_ut_free(*splitted);
+        ++splitted;
+    }
+    printf("\n");
+    ud_ut_free(begin);
 
-    // char *mt1[3] = {"oui" , "non", NULL};
-    // char *mt2[3] = {"si", "peut etre", NULL};
-    // char **main_test[3] = {mt1, mt2, NULL};
-    // char *joinedr = ud_str_vrjoin(main_test, " ; ", ", ");
-    // printf("%s\n", joinedr);
+    // Test join with va_args (0 leak)
+    char *vjoined = ud_str_vjoin("-", "salut", "cava");
+    printf("vjoin = |%s|\n", vjoined);
+    ud_ut_free(vjoined);
 
-    
+    // Test join with static and without free (little leak)
+    char *mt1[3] = {"oui" , "non", NULL};
+    char *mt2[3] = {"si", "peut etre", NULL};
+    char **main_test[3] = {mt1, mt2, NULL};
+    char *joinedr = ud_str_vrjoin(main_test, " ; ", ", ");
+    printf("vrjoin = |%s|\n", joinedr);
+    ud_ut_free(joinedr);
+
+    // Test join with malloc (0 leak)
+    char **mt1f = ud_ptr_set(char*, ud_str_dup("oui"), ud_str_dup("non"), NULL);
+    char **mt2f = ud_ptr_set(char*, ud_str_dup("si"), ud_str_dup("peut etre"), NULL);
+    char ***main_testf = ud_ptr_set(char**, mt1f, mt2f, NULL);
+    char *joinedrf = ud_str_vrfjoin(main_testf, " ; ", ", ");
+    printf("vrfjoin = |%s|\n", joinedrf);
+    ud_ut_free(joinedrf);
+
     return 0;
 }
