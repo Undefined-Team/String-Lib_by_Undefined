@@ -16,9 +16,12 @@
 # define ud_str_rjoin(str, sep)     ud_str_rjoin_ctr((char**)str, sep, false)
 # define ud_str_rfjoin(str, sep)    ud_str_rjoin_ctr((char**)str, sep, true)
 
-# define ud_str_vjoin(sep, ...)     ({ char *str[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_join(str, sep); ret; })
-# define ud_str_vrjoin(str, ...)    ({ char *sep[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_rjoin(str, sep); ret; })
-# define ud_str_vrfjoin(str, ...)   ({ char *sep[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_rfjoin(str, sep); ret; })
+// # define ud_str_vjoin(sep, ...)     ({ char *str[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_join(str, sep); ret; })
+// # define ud_str_vrjoin(str, ...)    ({ char *sep[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_rjoin(str, sep); ret; })
+// # define ud_str_vrfjoin(str, ...)   ({ char *sep[UD_ARGS_LEN(char*, __VA_ARGS__) + 1] = {__VA_ARGS__, NULL}; char *ret = ud_str_rfjoin(str, sep); ret; })
+# define ud_str_vjoin(sep, ...)     ({ char *str[] = {__VA_ARGS__, NULL}; char *ret = ud_str_join(str, sep); ret; })
+# define ud_str_vrjoin(str, ...)    ({ char *sep[] = {__VA_ARGS__, NULL}; char *ret = ud_str_rjoin(str, sep); ret; })
+# define ud_str_vrfjoin(str, ...)   ({ char *sep[] = {__VA_ARGS__, NULL}; char *ret = ud_str_rfjoin(str, sep); ret; })
 
 // Structures
 typedef struct                      uds_str_split_len {
