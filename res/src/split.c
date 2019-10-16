@@ -93,3 +93,22 @@ char                        **ud_str_split(char *str, char *sep)
     ud_str_split_free_len(begin);
     return new_arr;
 }
+
+char **ud_str_rsplit(char *str, char **floor_sep)
+{
+    if (!floor_sep || !*floor_sep) return NULL;
+    char **splitted = ud_str_split(str, *floor_sep);
+    char **splitted_tmp = splitted;
+    ++floor_sep;
+    if (*floor_sep)
+    {
+        char **new_val;
+        while (*splitted_tmp)
+        {
+            new_val = ud_str_rsplit(*splitted_tmp, floor_sep);
+            ud_ut_free(*splitted_tmp);
+            *(char***)splitted_tmp++ = new_val;
+        }
+    }
+    return splitted;
+}
