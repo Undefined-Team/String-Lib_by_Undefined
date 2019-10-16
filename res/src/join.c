@@ -18,21 +18,21 @@ char    *ud_str_join_ctr(char **str, char *sep, ud_bool need_free)
     {
         for (ud_ut_count i = 0; i < str_nbr; ++i)
         {
-            ud_str_cpy_rd(&res_tmp, *str_tmp);
+            ud_str_cpy_rd(res_tmp, *str_tmp);
             ud_ut_free(*str_tmp++);
-            ud_str_cpy_rd(&res_tmp, sep);
+            ud_str_cpy_rd(res_tmp, sep);
         }
-        ud_str_cpy_rd(&res_tmp, *str_tmp);
+        ud_str_cpy_rd(res_tmp, *str_tmp);
         ud_ut_free(*str_tmp++);
     }
     else
     {
         for (ud_ut_count i = 0; i < str_nbr; ++i)
         {
-            ud_str_cpy_rd(&res_tmp, *str_tmp++);
-            ud_str_cpy_rd(&res_tmp, sep);
+            ud_str_cpy_rd(res_tmp, *str_tmp++);
+            ud_str_cpy_rd(res_tmp, sep);
         }
-        ud_str_cpy_rd(&res_tmp, *str_tmp);
+        ud_str_cpy_rd(res_tmp, *str_tmp);
     }
     *res_tmp = '\0';
     if (need_free) ud_ut_free(str);

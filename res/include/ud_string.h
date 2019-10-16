@@ -6,9 +6,9 @@
 
 // Macro
 # define ud_str_is_white_space(c)   ((c) == ' ' || (c) == '\t' || (c) == '\n' || (c) == '\v' || (c) == '\f' || (c) == '\0')
-# define ud_str_dup(str)            (ud_str_ndup(str, 0))
-# define ud_str_fdup(str)           (ud_str_fndup(str, 0))
-
+# define ud_str_dup(str)            ud_str_ndup(str, 0)
+# define ud_str_fdup(str)           ud_str_fndup(str, 0)
+# define ud_str_cpy_rd(dst, src)    ud_str_cpy_rd_ctr(&dst, src)
 
 # define ud_str_join(str, sep)      ud_str_join_ctr(str, sep, false)
 # define ud_str_fjoin(str, sep)     ud_str_join_ctr(str, sep, true)
@@ -46,6 +46,6 @@ size_t                              ud_str_len(char *str);
 char                                *ud_str_escape(char *str);
 char                                *ud_str_whitespace(char *str);
 void                                ud_str_cpy(char *dst, char *src);
-void                                ud_str_cpy_rd(char **dst, char *src);
+void                                ud_str_cpy_rd_ctr(char **dst, char *src);
 
 #endif

@@ -85,7 +85,7 @@ char                        **ud_str_split(char *str, char *sep)
     {
         UD_UT_PROT_MALLOC(arr_str = ud_ut_malloc(sizeof(char) * (tmp->len + 1)));
         arr_str[tmp->len] = '\0';
-        ud_mem_cpy_rs(arr_str, (void**)&str, tmp->len);
+        ud_mem_cpy_rs(arr_str, str, tmp->len);
         *arr_val = arr_str;
         str += sep_len;
         ++arr_val;
