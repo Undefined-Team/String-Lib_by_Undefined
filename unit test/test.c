@@ -92,9 +92,9 @@ int main(void)
     ud_ut_free(joinedr);
 
     // Test join with malloc (0 leak)
-    char **mt1f = ud_ptr_set(char*, ud_str_dup("oui"), ud_str_dup("non"), NULL);
-    char **mt2f = ud_ptr_set(char*, ud_str_dup("si"), ud_str_dup("peut etre"), NULL);
-    char ***main_testf = ud_ptr_set(char**, mt1f, mt2f, NULL);
+    // char **mt1f = ud_ptr_set(char*, ud_str_dup("oui"), ud_str_dup("non"), NULL);
+    // char **mt2f = ud_ptr_set(char*, ud_str_dup("si"), ud_str_dup("peut etre"), NULL);
+    // char ***main_testf = ud_ptr_set(char**, mt1f, mt2f, NULL);
 
     char *test_str = ud_str_dup("oui, non ; si, peut etre");
     char **main_testf = ud_str_vrsplit(test_str, " ; ", ", ");

@@ -14,11 +14,11 @@
 
 # define ud_str_join(str, sep)      ud_str_join_ctr(str, sep, false)
 # define ud_str_fjoin(str, sep)     ud_str_join_ctr(str, sep, true)
+# define ud_str_vjoin(sep, ...)     ({ char *str[] = {__VA_ARGS__, NULL}; char *ret = ud_str_join(str, sep); ret; })
 
 # define ud_str_rjoin(str, sep)     ud_str_rjoin_ctr((char**)str, sep, false)
 # define ud_str_rfjoin(str, sep)    ud_str_rjoin_ctr((char**)str, sep, true)
 
-# define ud_str_vjoin(sep, ...)     ({ char *str[] = {__VA_ARGS__, NULL}; char *ret = ud_str_join(str, sep); ret; })
 # define ud_str_vrjoin(str, ...)    ({ char *sep[] = {__VA_ARGS__, NULL}; char *ret = ud_str_rjoin(str, sep); ret; })
 # define ud_str_vrfjoin(str, ...)   ({ char *sep[] = {__VA_ARGS__, NULL}; char *ret = ud_str_rfjoin(str, sep); ret; })
 
