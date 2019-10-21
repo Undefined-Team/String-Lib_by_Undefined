@@ -23,7 +23,8 @@ char    *ud_str_join_ctr(char **str, char *sep, ud_bool need_free)
             ud_str_cpy_rd(res_tmp, sep);
         }
         ud_str_cpy_rd(res_tmp, *str_tmp);
-        ud_ut_free(*str_tmp++);
+        ud_ut_free(*str_tmp);
+        ud_ut_free(str);
     }
     else
     {
@@ -35,7 +36,6 @@ char    *ud_str_join_ctr(char **str, char *sep, ud_bool need_free)
         ud_str_cpy_rd(res_tmp, *str_tmp);
     }
     *res_tmp = '\0';
-    if (need_free) ud_ut_free(str);
     return res;
 }
 
@@ -44,7 +44,19 @@ char    *ud_str_rjoin_ctr(char **str, char **sep, ud_bool need_free)
     ++sep;
     char **str_tmp = str;
     if (*sep)
+    {
+        if (!need_free)
+        {
+            ud_ut_count len = ud_ptr_len(str);
+            char **new = ud_ut_malloc(sizeof(char*) * (len + 1));
+            new[len] = NULL;
+            char **new_tmp = new;
+            while (len-- > 0)
+                *new_tmp++ = ud_str_rjoin_ctr((char**)*str_tmp++, sep, false);
+            return ud_str_join_ctr(new, *(sep - 1), true); 
+        }
         for (; *str_tmp; ++str_tmp)
-            *str_tmp = ud_str_rjoin_ctr((char**)*str_tmp, sep, need_free);
+            *str_tmp = ud_str_rjoin_ctr((char**)*str_tmp, sep, true);
+    }
     return ud_str_join_ctr(str, *(sep - 1), need_free);
 }
