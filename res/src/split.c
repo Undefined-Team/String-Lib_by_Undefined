@@ -1,23 +1,9 @@
 #include "ud_string.h"
 
-static ud_str_split_len     *ud_str_split_new_len(size_t len)
+void                ud_str_split_free(void *list)
 {
-    ud_str_split_len *new;
-    UD_UT_PROT_MALLOC(new = ud_ut_malloc(sizeof(ud_str_split_len)));
-    new->len = len;
-    new->next = NULL;
-    return new;
-}
-
-void                ud_str_split_free_len(ud_str_split_len *begin)
-{
-    ud_str_split_len *tmp;
-    while (begin)
-    {
-        tmp = begin;
-        begin = begin->next;
-        ud_ut_free(tmp);
-    }
+    ud_str_split_len *tmp = (ud_str_split_len *)list;
+    free(tmp);
 }
 
 static int                  ud_str_cmp_ofst(char **p1, char *p2, size_t *offset)
@@ -38,7 +24,8 @@ static int                  ud_str_cmp_ofst(char **p1, char *p2, size_t *offset)
 
 ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len)
 {
-    ud_str_split_len  *begin  = ud_str_split_new_len(0);
+    ud_str_split_len    *begin = ud_list_init(ud_str_split_len, len = 0);
+    begin->fp_free = &ud_str_split_free;
     ud_str_split_len  *tmp    = begin;
     size_t            offset;
     ud_ut_count i = 0;
@@ -46,9 +33,8 @@ ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len
     {
         if (!ud_str_cmp_ofst(&val, sep, &offset))
         {
-            tmp->next = ud_str_split_new_len(i);
+            tmp = ud_list_push_last(ud_str_split_len, tmp, len = i);
             i = 0;
-            tmp = tmp->next;
             ++(*split_len);
         }
         else
@@ -57,7 +43,7 @@ ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len
             ++val;
         }
     }
-    tmp->next = ud_str_split_new_len(i);
+    tmp = ud_list_push_last(ud_str_split_len, tmp, len = i);
     ++(*split_len);
     return begin;
 }
@@ -90,7 +76,7 @@ char                        **ud_str_split(char *str, char *sep)
         str += sep_len;
         ++arr_val;
     }
-    ud_str_split_free_len(begin);
+    ud_list_free(begin);
     return new_arr;
 }
 
