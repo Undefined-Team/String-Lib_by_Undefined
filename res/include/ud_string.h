@@ -3,6 +3,7 @@
 
 // Lib
 #include <ud_pointer.h>
+#include <ud_list.h>
 
 // Macro
 # define ud_str_is_white_space(c)   ((c) == ' ' || (c) == '\t' || (c) == '\n' || (c) == '\v' || (c) == '\f' || (c) == '\0')
@@ -24,9 +25,10 @@
 
 // Structures
 typedef struct                      uds_str_split_len {
-    size_t                          len;
+    void                            (*fp_free)(void *val);
     struct uds_str_split_len        *next;
-}                                   ud_str_split_len;        
+    size_t                          len;
+}                                   ud_str_split_len;
 
 // Prototypes
 int                                 ud_str_chr(char *str, char c);

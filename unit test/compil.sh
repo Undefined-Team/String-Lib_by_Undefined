@@ -1,12 +1,7 @@
 #!/bin/bash
 
-if [ -z $1 ]; then
-../setup.sh
-lib=""
-for pparam in "$@"
-do
-    lib="$pparam $lib"
-done
+if [ "$1" != "quick" ]; then
+../setup.sh $1 $2
 fi
-gcc test.c $lib -lud_utils -lud_memory -o executable
+gcc test.c $lib -lud_utils -lud_memory -lud_string -o executable
 ./executable
