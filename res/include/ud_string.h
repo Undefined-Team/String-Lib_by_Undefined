@@ -2,6 +2,7 @@
 # define UD_STRING_H
 
 // Lib
+#include <stdarg.h>
 #include <ud_pointer.h>
 #include <ud_list.h>
 
@@ -10,6 +11,13 @@
 # define ud_str_dup(str)            ud_str_ndup(str, 0)
 # define ud_str_fdup(str)           ud_str_fndup(str, 0)
 # define ud_str_cpy_rd(dst, src)    ud_str_cpy_rd_ctr(&dst, src)
+
+// SI ON PEUT RETRUN JUST AVEC LA FONCTION, ENLEVER LES RET DANS LES AUTRES MACROS
+# define ud_str_trim(str, _trim)    ({ size_t trim_len[ud_ptr_len(_trim)]; size_t *trim_len_tmp = trim_len; ud_ptr_fp(_trim, ud_str_trim_len, &trim_len_tmp); ud_str_trim_ctr(str, _trim, trim_len, false); })
+# define ud_str_ftrim(str, _trim)   ({ size_t trim_len[ud_ptr_len(_trim)]; size_t *trim_len_tmp = trim_len; ud_ptr_fp(_trim, ud_str_trim_len, &trim_len_tmp); ud_str_trim_ctr(str, _trim, trim_len, true); })
+
+# define ud_str_vtrim(str, ...)     ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_trim(str, trim); })
+# define ud_str_vftrim(str, ...)    ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_ftrim(str, trim); })
 
 # define ud_str_vrsplit(str, ...)   ({ char *sep[] = {__VA_ARGS__, NULL}; char **ret = ud_str_rsplit(str, sep); ret; })
 
@@ -33,6 +41,7 @@ typedef struct                      uds_str_split_len {
 // Prototypes
 int                                 ud_str_chr(char *str, char c);
 int                                 ud_str_cmp(char *s1, char *s2);
+int                                 ud_str_ncmp(char *s1, char *s2, size_t n);
 char                                *ud_str_ctoa(char c);
 char                                *ud_str_ndup(char *str, size_t len);
 char                                *ud_str_fndup(char *str, size_t len);
@@ -52,5 +61,7 @@ char                                *ud_str_escape(char *str);
 char                                *ud_str_whitespace(char *str);
 void                                ud_str_cpy(char *dst, char *src);
 void                                ud_str_cpy_rd_ctr(char **dst, char *src);
+char                                *ud_str_trim_ctr(char *str, char **trim, size_t *trim_len, ud_bool need_free);
+void                                ud_str_trim_len(char *str, size_t **trim_len);
 
 #endif
