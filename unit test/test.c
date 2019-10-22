@@ -101,7 +101,11 @@ int main(void)
     ud_ut_free(test_str);
     printf("vrsplit end %s\n", **(char***)main_testf);
 
-    char *joinedrf = ud_str_vrfjoin(main_testf, " ; ", ", ");
+    char *joinedrf = ud_str_vrjoin(main_testf, " ; ", ", ");
+    printf("vrsplit end %s\n", **(char***)main_testf);
+
+    ud_ptr_free(main_testf,2);
+
     printf("vrfjoin = |%s|\n", joinedrf);
     ud_ut_free(joinedrf);
 
