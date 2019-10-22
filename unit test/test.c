@@ -109,8 +109,8 @@ int main(void)
     printf("vrfjoin = |%s|\n", joinedrf);
     ud_ut_free(joinedrf);
     
-    char **trimer = ud_ut_array(char*, "slt", "cava", NULL);
-    char *trimed = ud_str_trim("sltcavaouietcavaslt", trimer);
+    char **trimer = ud_ut_array(char*, "salut", "caca", NULL);
+    char *trimed = ud_str_trim("salutcacaca", trimer);
     printf("trimed |%s|\n", trimed);
 
     return 0;
