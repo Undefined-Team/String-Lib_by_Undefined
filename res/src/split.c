@@ -33,7 +33,7 @@ ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len
     {
         if (!ud_str_cmp_ofst(&val, sep, &offset))
         {
-            tmp = ud_list_push(ud_str_split_len, tmp, len = i);
+            tmp = ud_list_push(tmp, len = i);
             i = 0;
             ++(*split_len);
         }
@@ -43,7 +43,7 @@ ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len
             ++val;
         }
     }
-    tmp = ud_list_push(ud_str_split_len, tmp, len = i);
+    tmp = ud_list_push(tmp, len = i);
     ++(*split_len);
     return begin;
 }

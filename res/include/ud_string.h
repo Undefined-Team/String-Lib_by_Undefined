@@ -12,6 +12,9 @@
 # define ud_str_fdup(str)           ud_str_fndup(str, 0)
 # define ud_str_cpy_rd(dst, src)    ud_str_cpy_rd_ctr(&dst, src)
 
+# define ud_str_escape(str)         ud_str_escape_ctr(str, false)
+# define ud_str_fescape(str)        ud_str_escape_ctr(str, true)
+
 // # define ud_str_trim(str, _trim)    ({ size_t trim_len[ud_ptr_len(_trim)]; size_t *trim_len_tmp = trim_len; ud_ptr_fp(_trim, ud_str_trim_len, &trim_len_tmp); ud_str_trim_ctr(str, _trim, trim_len, false); })
 // # define ud_str_ftrim(str, _trim)   ({ size_t trim_len[ud_ptr_len(_trim)]; size_t *trim_len_tmp = trim_len; ud_ptr_fp(_trim, ud_str_trim_len, &trim_len_tmp); ud_str_trim_ctr(str, _trim, trim_len, true); })
 
@@ -65,7 +68,7 @@ char                                **ud_str_rsplit(char *str, char **floor_sep)
 char                                *ud_str_join_ctr(char **str, char *sep, ud_bool need_free);
 char                                *ud_str_rjoin_ctr(char **str, char **sep, ud_bool need_free);
 size_t                              ud_str_len(char *str);
-char                                *ud_str_escape(char *str);
+char                                *ud_str_escape_ctr(char *str, ud_bool need_free);
 char                                *ud_str_whitespace(char *str);
 void                                ud_str_cpy(char *dst, char *src);
 void                                ud_str_cpy_rd_ctr(char **dst, char *src);
