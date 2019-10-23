@@ -26,7 +26,6 @@
 # define ud_str_join(str, sep)      ud_str_join_ctr(str, sep, false)
 # define ud_str_fjoin(str, sep)     ud_str_join_ctr(str, sep, true)
 # define ud_str_vjoin(sep, ...)     ({ char *str[] = {__VA_ARGS__, NULL}; ud_str_join(str, sep); })
-# define ud_str_vjoin_nosep(...)    ud_str_vjoin(NULL, __VA_ARGS__)
 # define ud_str_vfjoin(sep, ...)    ({ char **str = ud_ut_array(char *, __VA_ARGS__, NULL); ud_str_fjoin(str, sep); })
 
 # define ud_str_rjoin(str, sep)     ud_str_rjoin_ctr((char**)str, sep, false)
