@@ -34,7 +34,7 @@ void        ud_str_trim_len(char *str, size_t **trim_len)
     *(*trim_len)++ = ud_str_len(str);
 }
 
-char        *ud_str_trim_ctr(char *str, char **trim, size_t *trim_len, ud_bool need_free)
+char        *ud_str_trim_main_ctr(char *str, char **trim, size_t *trim_len, ud_bool need_free)
 {
     size_t str_len = ud_str_len(str);
     size_t dec_a = 0;
@@ -59,3 +59,17 @@ char        *ud_str_trim_ctr(char *str, char **trim, size_t *trim_len, ud_bool n
     if (need_free) ud_ut_free(str);
     return new;
 }
+
+char    *ud_str_trim_ctr(char *str, char **trim, ud_bool need_free)
+{
+    size_t trim_len[ud_ptr_len(trim)];
+    size_t *trim_len_tmp = trim_len;
+    // ud_ptr_fp(trim, ud_str_trim_len, &trim_len_tmp);
+    ud_ptr_foreach(trim, elem, *trim_len_tmp++ = ud_str_len(*elem));
+    ud_str_trim_main_ctr(str, trim, trim_len, need_free);
+}
+
+// char    *ud_str_rtrim_ctr(char **strs, char **trim, size_t *trim_lem, ud_bool need_free)
+// {
+
+// }

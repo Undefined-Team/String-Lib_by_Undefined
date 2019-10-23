@@ -112,6 +112,8 @@ int main(void)
     char **trimer = ud_ut_array(char*, "salut", "caca", NULL);
     char *trimed = ud_str_trim("salutcacaca", trimer);
     printf("trimed |%s|\n", trimed);
+    ud_ut_free(trimer);
+    ud_ut_free(trimed);
 
     return 0;
 }
