@@ -15,9 +15,6 @@
 # define ud_str_escape(str)         ud_str_escape_ctr(str, false)
 # define ud_str_fescape(str)        ud_str_escape_ctr(str, true)
 
-// # define ud_str_trim(str, _trim)    ({ size_t trim_len[ud_ptr_len(_trim)]; size_t *trim_len_tmp = trim_len; ud_ptr_fp(_trim, ud_str_trim_len, &trim_len_tmp); ud_str_trim_ctr(str, _trim, trim_len, false); })
-// # define ud_str_ftrim(str, _trim)   ({ size_t trim_len[ud_ptr_len(_trim)]; size_t *trim_len_tmp = trim_len; ud_ptr_fp(_trim, ud_str_trim_len, &trim_len_tmp); ud_str_trim_ctr(str, _trim, trim_len, true); })
-
 # define ud_str_trim(str, trim)     ud_str_trim_ctr(str, trim, false)
 # define ud_str_ftrim(str, trim)    ud_str_trim_ctr(str, trim, true)
 
@@ -25,9 +22,10 @@
 # define ud_str_vftrim(str, ...)    ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_ftrim(str, trim); })
 
 # define ud_str_rtrim(strs, _trim)
-# define ud_str_rftrim(strs, _trim)
+# define ud_str_rctrim(strs, _trim)
 
-# define ud_str_
+# define ud_str_vrtrim()
+# define ud_str_vrctrim()
 
 # define ud_str_vrsplit(str, ...)   ({ char *sep[] = {__VA_ARGS__, NULL}; ud_str_rsplit(str, sep); })
 
@@ -74,6 +72,5 @@ void                                ud_str_cpy(char *dst, char *src);
 void                                ud_str_cpy_rd_ctr(char **dst, char *src);
 char                                *ud_str_trim_main_ctr(char *str, char **trim, size_t *trim_len, ud_bool need_free);
 char                                *ud_str_trim_ctr(char *str, char **trim, ud_bool need_free);
-void                                ud_str_trim_len(char *str, size_t **trim_len);
 
 #endif
