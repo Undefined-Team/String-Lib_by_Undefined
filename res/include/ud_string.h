@@ -17,7 +17,7 @@
 
 # define ud_str_trim(str, trim)         ud_str_trim_ctr(str, trim, false)
 # define ud_str_ftrim(str, trim)        ud_str_trim_ctr(str, trim, true)
-# define ud_str_rtrim(str, depth, trim) ud_str_rtrim_ctr((char**)str, size_t depth, char **trim)
+# define ud_str_rtrim(str, depth, trim) ud_str_rtrim_ctr((char**)str, depth, **trim)
 
 # define ud_str_vtrim(str, ...)         ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_trim(str, trim); })
 # define ud_str_vftrim(str, ...)        ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_ftrim(str, trim); }) 
