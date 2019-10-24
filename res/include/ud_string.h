@@ -19,13 +19,8 @@
 # define ud_str_ftrim(str, trim)    ud_str_trim_ctr(str, trim, true)
 
 # define ud_str_vtrim(str, ...)     ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_trim(str, trim); })
-# define ud_str_vftrim(str, ...)    ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_ftrim(str, trim); })
-
-# define ud_str_rtrim(strs, _trim)
-# define ud_str_rctrim(strs, _trim)
-
-# define ud_str_vrtrim()
-# define ud_str_vrctrim()
+# define ud_str_vftrim(str, ...)    ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_ftrim(str, trim); }) 
+# define ud_str_vrtrim(str, depth, ...) ({ char *trim[] = {__VA_ARGS__, NULL}; ud_str_rtrim(str, depth, trim); })
 
 # define ud_str_vrsplit(str, ...)   ({ char *sep[] = {__VA_ARGS__, NULL}; ud_str_rsplit(str, sep); })
 
@@ -72,5 +67,6 @@ void                                ud_str_cpy(char *dst, char *src);
 void                                ud_str_cpy_rd_ctr(char **dst, char *src);
 char                                *ud_str_trim_main_ctr(char *str, char **trim, size_t *trim_len, ud_bool need_free);
 char                                *ud_str_trim_ctr(char *str, char **trim, ud_bool need_free);
+void                                ud_str_rtrim(char **str, size_t depth, char **trim);
 
 #endif

@@ -96,9 +96,10 @@ int main(void)
     // char **mt2f = ud_ptr_set(char*, ud_str_dup("si"), ud_str_dup("peut etre"), NULL);
     // char ***main_testf = ud_ptr_set(char**, mt1f, mt2f, NULL);
 
-    char *test_str = ud_str_dup("oui, non ; si, peut etre");
+    char *test_str = ud_str_dup("ouicaca, non ; si, peut etre");
     char **main_testf = ud_str_vrsplit(test_str, " ; ", ", ");
     ud_ut_free(test_str);
+    ud_str_vrtrim(main_testf,1, "ca");
     printf("vrsplit end %s\n", **(char***)main_testf);
 
     char *joinedrf = ud_str_vrjoin(main_testf, " ; ", ", ");
@@ -114,6 +115,8 @@ int main(void)
     printf("trimed |%s|\n", trimed);
     ud_ut_free(trimer);
     ud_ut_free(trimed);
+
+
 
     return 0;
 }
