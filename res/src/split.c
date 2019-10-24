@@ -69,7 +69,7 @@ char                        **ud_str_split(char *str, char *sep)
     char                *arr_str;
     for (ud_str_split_len *tmp = begin->next; tmp; tmp = tmp->next)
     {
-        UD_UT_PROT_MALLOC(arr_str = ud_ut_malloc(sizeof(char) * (tmp->len + 1)));
+        ud_ut_prot_malloc(arr_str = ud_ut_malloc(sizeof(char) * (tmp->len + 1)));
         arr_str[tmp->len] = '\0';
         ud_mem_cpy_rs(arr_str, str, tmp->len);
         *arr_val = arr_str;

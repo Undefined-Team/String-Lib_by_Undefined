@@ -10,7 +10,7 @@ char    *ud_str_join_ctr(char **str, char *sep, ud_bool need_free)
     while (*str_tmp) total_len += ud_str_len(*str_tmp++);
     total_len += sep_len * (str_nbr - 1);
     char *res;
-    UD_UT_PROT_MALLOC(res = ud_ut_malloc(sizeof(char) * (total_len + 1)));
+    ud_ut_prot_malloc(res = ud_ut_malloc(sizeof(char) * (total_len + 1)));
     char *res_tmp = res;
     str_tmp = str;
     --str_nbr;
