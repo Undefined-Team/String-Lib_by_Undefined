@@ -63,18 +63,18 @@ char    *ud_str_trim_ctr(char *str, char **trim, ud_bool need_free)
     return ud_str_trim_main_ctr(str, trim, trim_len, need_free);
 }
 
-static void     ud_str_rtrim_ctr(char **str, char **trim, size_t *trim_len, size_t depth)
+static void     ud_str_rtrim_rec(char **str, char **trim, size_t *trim_len, size_t depth)
 {
     if (depth--)
-        ud_ptr_foreach(str, elem, ud_str_rtrim_ctr((char**)*elem, trim, trim_len, depth););
+        ud_ptr_foreach(str, elem, ud_str_rtrim_rec((char**)*elem, trim, trim_len, depth););
     else if (str)
         ud_ptr_foreach(str, elem, *elem = ud_str_trim_main_ctr(*elem, trim, trim_len, true););
 }
 
-void ud_str_rtrim(char **str, size_t depth, char **trim)
+void ud_str_rtrim_ctr(char **str, size_t depth, char **trim)
 {
     size_t trim_len[ud_ptr_len(trim)];
     size_t *trim_len_tmp = trim_len;
     ud_ptr_foreach(trim, elem, *trim_len_tmp++ = ud_str_len(*elem););
-    ud_str_rtrim_ctr(str, trim, trim_len, depth);
+    ud_str_rtrim_rec(str, trim, trim_len, depth);
 }

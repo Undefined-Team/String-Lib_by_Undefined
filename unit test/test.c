@@ -1,6 +1,14 @@
 #include <ud_string.h>
 #include <assert.h>
 
+# define nameof(var)    #var
+
+char*    print_state(void *ptr)
+{
+    if (ptr <= (void*)&ptr) ud_str_dup("malloc\n");
+    else ud_str_dup("static\n");
+}
+
 int main(void)
 {
     // char *a = "a";
@@ -116,7 +124,26 @@ int main(void)
     ud_ut_free(trimer);
     ud_ut_free(trimed);
 
+    int is_st[] = {1};
+    int *is_st1 = is_st; 
+    int *is_ma = malloc(sizeof(int));
+    int *is_ma1 = is_st1;
 
+    int is_st2[] = {1, 2};
+    int *is_ma2 = malloc(sizeof(int) * 2);
 
+    printf("%p %p %p\n", is_st, is_st1, is_ma);
+    printf("%p %p %p\n", &is_st, &is_st1, &is_ma);
+    printf("%d %d %d\n", is_st, is_st1, is_ma);
+    printf("%d %d %d\n", &is_st, &is_st1, &is_ma);
+    printf("%zd %zd\n", sizeof(is_st2), sizeof(is_ma2));
+    // printf("%d %d\n", typeof(is_st2) == typeof(is_ma2), typeof(is_st) == typeof(is_st2));
+    
+    printf("%s = %s", nameof(is_st), print_state(is_st));
+    printf("%s = %s", nameof(is_st1), print_state(is_st1));
+    // printf("%s = %s", nameof(is_st2), print_state(is_st2));
+    printf("%s = %s", nameof(is_ma), print_state(is_ma));
+    printf("%s = %s", nameof(is_ma1), print_state(is_ma1));
+    // printf("%s = %s", nameof(is_ma2), print_state(is_ma2));
     return 0;
 }
