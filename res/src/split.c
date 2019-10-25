@@ -76,7 +76,7 @@ char                        **ud_str_split(char *str, char *sep)
         str += sep_len;
         ++arr_val;
     }
-    ud_list_free(begin);
+    ud_list_free(ud_str_split_len, begin);
     return new_arr;
 }
 
