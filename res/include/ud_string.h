@@ -37,11 +37,14 @@
 # define ud_str_vrfjoin(str, ...)       ({ char *sep[] = {__VA_ARGS__, NULL}; ud_str_rfjoin(str, sep); })
 
 // Structures
-typedef struct                      uds_str_split_len {
-    void                            (*fp_free)(void *val);
-    struct uds_str_split_len        *next;
+
+ud_list_struct(ud_str_split_len, size_t len);
+/*
+typedef struct                      sud_str_split_len {
+    struct sud_str_split_len        *next;
     size_t                          len;
 }                                   ud_str_split_len;
+*/
 
 // Prototypes
 int                                 ud_str_chr(char *str, char c);

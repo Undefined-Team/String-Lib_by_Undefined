@@ -1,10 +1,6 @@
 #include "ud_string.h"
 
-void                ud_str_split_free(void *list)
-{
-    ud_str_split_len *tmp = (ud_str_split_len *)list;
-    free(tmp);
-}
+ud_list_define(ud_str_split_len, ud_list_default_free, NULL);
 
 static int                  ud_str_cmp_ofst(char **p1, char *p2, size_t *offset)
 {
@@ -25,7 +21,6 @@ static int                  ud_str_cmp_ofst(char **p1, char *p2, size_t *offset)
 ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len)
 {
     ud_str_split_len    *begin = ud_list_init(ud_str_split_len, len = 0);
-    begin->fp_free = &ud_str_split_free;
     ud_str_split_len  *tmp    = begin;
     size_t            offset;
     ud_ut_count i = 0;
