@@ -4,6 +4,7 @@ char    *ud_str_sub(char *str, size_t start, size_t len)
 {
     char    *sub;
 
+    if (start > ud_str_len(str)) return ud_str_dup("");
     if (!str) return NULL;
     ud_ut_prot_malloc(sub = ud_ut_malloc(sizeof(char) * (len + 1)));
     char *p_sub = sub;

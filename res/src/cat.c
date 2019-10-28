@@ -3,8 +3,8 @@
 char    *ud_str_cat(char *head, char *tail)
 {
     char    *cat;
-    if (!head) return ud_str_fdup(tail);
-    else if (!tail) return ud_str_fdup(head);
+    if (!head) return ud_str_dup(tail);
+    else if (!tail) return ud_str_dup(head);
     size_t  head_len = ud_str_len(head);
     size_t  tail_len = ud_str_len(tail);
     ud_ut_prot_malloc(cat = ud_ut_malloc(sizeof(char) * (head_len + tail_len + 1)));

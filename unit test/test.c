@@ -7,6 +7,55 @@ char*    print_state(void *ptr)
 {
     if (ptr <= (void*)&ptr) ud_str_dup("malloc\n");
     else ud_str_dup("static\n");
+    return NULL;
+}
+
+void ud_str_test_tmp(void)
+{
+    char *null = NULL;
+    char *a = "a";
+    char *b = "b";
+    char *abc = "abc";
+    char *def = "def";
+    char *abcdef = "abcdef";
+    char *aaaaaa = "aaaaaa";    
+
+    ud_ut_test(a != ud_str_dup(a));
+    ud_ut_test(!ud_str_cmp(a, ud_str_dup(a)) == !ud_mem_cmp(a, ud_str_dup(a), 2) && !ud_str_cmp(a, ud_str_dup(a)));
+    ud_ut_test(!ud_str_cmp(a, ud_str_dup("a")));
+    ud_ut_test(ud_str_dup(null) == NULL);
+    ud_ut_test(ud_str_cmp(null, NULL) == -1);
+    ud_ut_test(ud_str_cmp(a, b) == -1);
+    ud_ut_test(ud_str_cmp(b, a) == 1);
+    ud_ut_test(ud_str_cmp(a, abc) < 0);
+    ud_ut_test(ud_str_cmp(abc, a) > 0);
+    ud_ut_test(ud_str_cmp(NULL, abc) < 0);
+    ud_ut_test(ud_str_cmp(abc, NULL) > 0);
+    ud_ut_test(!ud_str_cmp(abc, "abc"));
+    ud_ut_test(!ud_str_ncmp(abc, a, 1));
+    ud_ut_test(!ud_str_ncmp(a, abc, 1));
+    ud_ut_test(!ud_str_cmp("a", ud_str_ctoa('a')));
+    ud_ut_test(!ud_str_cmp("", ud_str_ctoa(0)));
+    ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 3), abc));
+    ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 4), "abcd"));
+    ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 1000), abcdef));
+    ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 0), abcdef));
+    ud_ut_test(ud_str_cmp(ud_str_ndup(null, 0), null) == -1);
+    ud_ut_test(ud_str_cmp(ud_str_ndup(null, 100), null) == -1);
+    ud_ut_test(!ud_str_cmp(ud_str_fill('a', 6), aaaaaa));
+    ud_ut_test(!ud_str_cmp(ud_str_fill('0', 6), "000000"));
+    ud_ut_test(!ud_str_cmp(ud_str_fill(0, 0), ""));
+    ud_ut_test(!ud_mem_cmp(ud_str_fill(0, 6), "\0\0\0\0\0\0", 6));
+    ud_ut_test(!ud_str_cmp(ud_str_cat(abc, def), abcdef));
+    ud_ut_test(!ud_str_cmp(ud_str_cat(NULL, abc), abc));
+    ud_ut_test(!ud_str_cmp(ud_str_cat(abc, NULL), abc));
+    ud_ut_test(ud_str_cat(NULL, NULL) == NULL);
+    ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 0, 3), abc));
+    ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 3, 6), def));
+    ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 3, 100), def));
+    ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 3, 0), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 10, 10), ""));
+    ud_ut_test(ud_str_sub(NULL, 0, 1000) == NULL);
 }
 
 int main(void)
@@ -73,77 +122,78 @@ int main(void)
     // ud_arr_free(str);
 
     // Test split (0 leak)
-    char test[] = "JOHNY,salutJOHNY, caJOHNY, vaJOHNY,";
-    char **splitted = ud_str_split(test, "JOHNY,");
-    char **begin = splitted;
-    printf("split = ");
-    while (*splitted)
-    {
-        printf("[%s], ", *splitted);
-        ud_ut_free(*splitted);
-        ++splitted;
-    }
-    printf("\n");
-    ud_ut_free(begin);
+    // char test[] = "JOHNY,salutJOHNY, caJOHNY, vaJOHNY,";
+    // char **splitted = ud_str_split(test, "JOHNY,");
+    // char **begin = splitted;
+    // printf("split = ");
+    // while (*splitted)
+    // {
+    //     printf("[%s], ", *splitted);
+    //     ud_ut_free(*splitted);
+    //     ++splitted;
+    // }
+    // printf("\n");
+    // ud_ut_free(begin);
 
     // Test join with va_args (0 leak)
-    char *vjoined = ud_str_vjoin("-", "salut", "cava");
-    printf("vjoin = |%s|\n", vjoined);
-    ud_ut_free(vjoined);
+    // char *vjoined = ud_str_vjoin("-", "salut", "cava");
+    // printf("vjoin = |%s|\n", vjoined);
+    // ud_ut_free(vjoined);
 
     // Test join with static and without free (little leak)
-    char *mt1[3] = {"oui" , "non", NULL};
-    char *mt2[3] = {"si", "peut etre", NULL};
-    char **main_test[3] = {mt1, mt2, NULL};
-    char *joinedr = ud_str_vrjoin(main_test, " ; ", ", ");
-    printf("vrjoin = |%s|\n", joinedr);
-    ud_ut_free(joinedr);
+    // char *mt1[3] = {"oui" , "non", NULL};
+    // char *mt2[3] = {"si", "peut etre", NULL};
+    // char **main_test[3] = {mt1, mt2, NULL};
+    // char *joinedr = ud_str_vrjoin(main_test, " ; ", ", ");
+    // printf("vrjoin = |%s|\n", joinedr);
+    // ud_ut_free(joinedr);
 
     // Test join with malloc (0 leak)
     // char **mt1f = ud_ptr_set(char*, ud_str_dup("oui"), ud_str_dup("non"), NULL);
     // char **mt2f = ud_ptr_set(char*, ud_str_dup("si"), ud_str_dup("peut etre"), NULL);
     // char ***main_testf = ud_ptr_set(char**, mt1f, mt2f, NULL);
 
-    char *test_str = ud_str_dup("ouicaca, non ; si, peut etre");
-    char **main_testf = ud_str_vrsplit(test_str, " ; ", ", ");
-    ud_ut_free(test_str);
-    ud_str_vrtrim(main_testf,1, "ca");
-    printf("vrsplit end %s\n", **(char***)main_testf);
+    // char *test_str = ud_str_dup("ouicaca, non ; si, peut etre");
+    // char **main_testf = ud_str_vrsplit(test_str, " ; ", ", ");
+    // ud_ut_free(test_str);
+    // ud_str_vrtrim(main_testf,1, "ca");
+    // printf("vrsplit end %s\n", **(char***)main_testf);
 
-    char *joinedrf = ud_str_vrjoin(main_testf, " ; ", ", ");
-    printf("vrsplit end %s\n", **(char***)main_testf);
+    // char *joinedrf = ud_str_vrjoin(main_testf, " ; ", ", ");
+    // printf("vrsplit end %s\n", **(char***)main_testf);
 
-    ud_ptr_free(main_testf,2);
+    // ud_ptr_free(main_testf,2);
 
-    printf("vrfjoin = |%s|\n", joinedrf);
-    ud_ut_free(joinedrf);
+    // printf("vrfjoin = |%s|\n", joinedrf);
+    // ud_ut_free(joinedrf);
     
-    char **trimer = ud_ut_array(char*, "salut", "caca", NULL);
-    char *trimed = ud_str_trim("salutcacaca", trimer);
-    printf("trimed |%s|\n", trimed);
-    ud_ut_free(trimer);
-    ud_ut_free(trimed);
+    // char **trimer = ud_ut_array(char*, "salut", "caca", NULL);
+    // char *trimed = ud_str_trim("salutcacaca", trimer);
+    // printf("trimed |%s|\n", trimed);
+    // ud_ut_free(trimer);
+    // ud_ut_free(trimed);
 
-    int is_st[] = {1};
-    int *is_st1 = is_st; 
-    int *is_ma = malloc(sizeof(int));
-    int *is_ma1 = is_st1;
+    // int is_st[] = {1};
+    // int *is_st1 = is_st; 
+    // int *is_ma = malloc(sizeof(int));
+    // int *is_ma1 = is_st1;
 
-    int is_st2[] = {1, 2};
-    int *is_ma2 = malloc(sizeof(int) * 2);
+    // int is_st2[] = {1, 2};
+    // int *is_ma2 = malloc(sizeof(int) * 2);
 
-    printf("%p %p %p\n", is_st, is_st1, is_ma);
-    printf("%p %p %p\n", &is_st, &is_st1, &is_ma);
-    printf("%d %d %d\n", is_st, is_st1, is_ma);
-    printf("%d %d %d\n", &is_st, &is_st1, &is_ma);
-    printf("%zd %zd\n", sizeof(is_st2), sizeof(is_ma2));
+    // printf("%p %p %p\n", is_st, is_st1, is_ma);
+    // printf("%p %p %p\n", &is_st, &is_st1, &is_ma);
+    // printf("%d %d %d\n", is_st, is_st1, is_ma);
+    // printf("%d %d %d\n", &is_st, &is_st1, &is_ma);
+    // printf("%zd %zd\n", sizeof(is_st2), sizeof(is_ma2));
     // printf("%d %d\n", typeof(is_st2) == typeof(is_ma2), typeof(is_st) == typeof(is_st2));
     
-    printf("%s = %s", nameof(is_st), print_state(is_st));
-    printf("%s = %s", nameof(is_st1), print_state(is_st1));
+    // printf("%s = %s", nameof(is_st), print_state(is_st));
+    // printf("%s = %s", nameof(is_st1), print_state(is_st1));
     // printf("%s = %s", nameof(is_st2), print_state(is_st2));
-    printf("%s = %s", nameof(is_ma), print_state(is_ma));
-    printf("%s = %s", nameof(is_ma1), print_state(is_ma1));
+    // printf("%s = %s", nameof(is_ma), print_state(is_ma));
+    // printf("%s = %s", nameof(is_ma1), print_state(is_ma1));
     // printf("%s = %s", nameof(is_ma2), print_state(is_ma2));
+    ud_str_test_tmp();
     return 0;
 }
