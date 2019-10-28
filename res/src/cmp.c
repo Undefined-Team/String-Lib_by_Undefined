@@ -3,7 +3,7 @@
 int     ud_str_cmp(char *p1, char *p2)
 {
     if (!p1)
-        return -1;
+        return p2 ? -1 : 0;
     else if (!p2)
         return 1;
     unsigned char *s1 = (unsigned char *)p1;
@@ -17,7 +17,7 @@ int     ud_str_ncmp(char *p1, char *p2, size_t n)
 {
 
     if (!p1)
-        return -1;
+        return p2 ? -1 : 0;
     else if (!p2)
         return 1;
     unsigned char *s1 = (unsigned char *)p1;

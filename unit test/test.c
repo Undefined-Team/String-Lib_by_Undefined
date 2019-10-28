@@ -12,7 +12,6 @@ char*    print_state(void *ptr)
 
 void ud_str_test_tmp(void)
 {
-    char *null = NULL;
     char *a = "a";
     char *b = "b";
     char *abc = "abc";
@@ -23,8 +22,8 @@ void ud_str_test_tmp(void)
     ud_ut_test(a != ud_str_dup(a));
     ud_ut_test(!ud_str_cmp(a, ud_str_dup(a)) == !ud_mem_cmp(a, ud_str_dup(a), 2) && !ud_str_cmp(a, ud_str_dup(a)));
     ud_ut_test(!ud_str_cmp(a, ud_str_dup("a")));
-    ud_ut_test(ud_str_dup(null) == NULL);
-    ud_ut_test(ud_str_cmp(null, NULL) == -1);
+    ud_ut_test(ud_str_dup(NULL) == NULL);
+    ud_ut_test(!ud_str_cmp(NULL, NULL));
     ud_ut_test(ud_str_cmp(a, b) == -1);
     ud_ut_test(ud_str_cmp(b, a) == 1);
     ud_ut_test(ud_str_cmp(a, abc) < 0);
@@ -34,14 +33,17 @@ void ud_str_test_tmp(void)
     ud_ut_test(!ud_str_cmp(abc, "abc"));
     ud_ut_test(!ud_str_ncmp(abc, a, 1));
     ud_ut_test(!ud_str_ncmp(a, abc, 1));
+    ud_ut_test(!ud_str_ncmp(abcdef, abc, 3));
+    ud_ut_test(!ud_str_ncmp(abcdef, a, 1));
+    ud_ut_test(ud_str_ncmp(NULL, NULL, 0) == -1);
     ud_ut_test(!ud_str_cmp("a", ud_str_ctoa('a')));
     ud_ut_test(!ud_str_cmp("", ud_str_ctoa(0)));
     ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 3), abc));
     ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 4), "abcd"));
     ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 1000), abcdef));
     ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 0), abcdef));
-    ud_ut_test(ud_str_cmp(ud_str_ndup(null, 0), null) == -1);
-    ud_ut_test(ud_str_cmp(ud_str_ndup(null, 100), null) == -1);
+    ud_ut_test(!ud_str_cmp(ud_str_ndup(NULL, 0), NULL));
+    ud_ut_test(!ud_str_cmp(ud_str_ndup(NULL, 100), NULL));
     ud_ut_test(!ud_str_cmp(ud_str_fill('a', 6), aaaaaa));
     ud_ut_test(!ud_str_cmp(ud_str_fill('0', 6), "000000"));
     ud_ut_test(!ud_str_cmp(ud_str_fill(0, 0), ""));
@@ -56,6 +58,7 @@ void ud_str_test_tmp(void)
     ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 3, 0), ""));
     ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 10, 10), ""));
     ud_ut_test(ud_str_sub(NULL, 0, 1000) == NULL);
+    
 }
 
 int main(void)
