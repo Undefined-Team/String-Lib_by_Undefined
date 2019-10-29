@@ -16,9 +16,14 @@ void ud_str_test_tmp(void)
     char *b = "b";
     char *abc = "abc";
     char *def = "def";
-    char *abcdef = "abcdef";
-    char *aaaaaa = "aaaaaa";    
+    char *abcdef = ud_str_dup("abcdef");
+    char *aaaaaa = ud_str_dup("aaaaaa");
 
+    ud_ut_test(ud_str_chr(abc, 'a') == 0);
+    ud_ut_test(ud_str_chr(abc, 'b') == 1);
+    ud_ut_test(ud_str_chr(abc, 'c') == 2);
+    ud_ut_test(ud_str_chr(abc, 0) == -1);
+    ud_ut_test(ud_str_chr(abc, 'd') == -1);
     ud_ut_test(a != ud_str_dup(a));
     ud_ut_test(!ud_str_cmp(a, ud_str_dup(a)) == !ud_mem_cmp(a, ud_str_dup(a), 2) && !ud_str_cmp(a, ud_str_dup(a)));
     ud_ut_test(!ud_str_cmp(a, ud_str_dup("a")));
@@ -35,7 +40,7 @@ void ud_str_test_tmp(void)
     ud_ut_test(!ud_str_ncmp(a, abc, 1));
     ud_ut_test(!ud_str_ncmp(abcdef, abc, 3));
     ud_ut_test(!ud_str_ncmp(abcdef, a, 1));
-    ud_ut_test(ud_str_ncmp(NULL, NULL, 0) == -1);
+    ud_ut_test(ud_str_ncmp(NULL, NULL, 0) == 0);
     ud_ut_test(!ud_str_cmp("a", ud_str_ctoa('a')));
     ud_ut_test(!ud_str_cmp("", ud_str_ctoa(0)));
     ud_ut_test(!ud_str_cmp(ud_str_ndup(abcdef, 3), abc));
@@ -58,7 +63,77 @@ void ud_str_test_tmp(void)
     ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 3, 0), ""));
     ud_ut_test(!ud_str_cmp(ud_str_sub(abcdef, 10, 10), ""));
     ud_ut_test(ud_str_sub(NULL, 0, 1000) == NULL);
+    ud_ut_test(!ud_str_cmp(ud_str_join(ud_ut_array(char *, "a", "b", "c", "d", "e", "f"), ","), "a,b,c,d,e,f"));
+    ud_ut_test(!ud_str_cmp(ud_str_join(ud_ut_array(char *, "a", "b", "c", "d", "e", "f"), NULL), "abcdef"));
+    ud_ut_test(!ud_str_cmp(ud_str_join(ud_ut_array(char *, "a"), NULL), "a"));
+    ud_ut_test(!ud_str_cmp(ud_str_join(NULL, ","), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_join(NULL, NULL), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_join(ud_ut_array(char *, "a", "b", "c", "d", "e", "f"), ","), "a,b,c,d,e,f"));
+    ud_ut_test(!ud_str_cmp(ud_str_join(ud_ut_array(char *, "a", "b", "c", "d", "e", "f"), "FOO"), "aFOObFOOcFOOdFOOeFOOf"));
+    ud_ut_test(!ud_str_cmp(ud_str_join(ud_ut_array(char *, "FOO", "FOO"), "FOO"), "FOOFOOFOO"));
+    ud_ut_test(!ud_str_cmp(ud_str_vjoin(",", "a", "b", "c", "d"), "a,b,c,d"));
+    ud_ut_test(!ud_str_cmp(ud_str_vjoin(",", NULL), NULL));
+    ud_ut_test(!ud_str_cmp(ud_str_vjoin("FOO", "FOO", "FOO"), "FOOFOOFOO"));
+    ud_ut_test(!ud_str_cmp(ud_str_vjoin(",", NULL, NULL, NULL), NULL));
+    ud_ut_test(!ud_str_cmp(ud_str_vjoin(NULL, "a", "b", "c", "d"), "abcd"));
+    ud_ut_test(!ud_str_cmp(ud_str_vjoin(NULL, NULL, NULL), NULL));
+    ud_ut_test(ud_str_len(NULL) == 0);
+    ud_ut_test(ud_str_len("a") == 1);
+    ud_ut_test(ud_str_len("a\0\0") == 1);
+    ud_ut_test(ud_str_len("abcdefghijklmnopqrstuvwxyz") == 26);
+    ud_ut_test(ud_str_len("") == 0);
+    ud_ut_test(!ud_str_cmp(ud_str_escape("foo"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\"foo\""), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\"\""), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\"\"\"\""), "\"\""));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\'foo\'"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\'\'"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\'\'\'\'"), "\'\'"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape(NULL), NULL));
+    ud_ut_test(!ud_str_cmp(ud_str_escape(""), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\"foo"), "\"foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\""), "\""));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\"\"foo\""), "\"foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\"\"\""), "\""));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\'foo"), "\'foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\'"), "\'"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\'\'foo\'"), "\'foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_escape("\'\'\'"), "\'"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("foo"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\nfoo\n"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\n\n"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\n\n\n\n"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\tfoo\t"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\t\t"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\t\t\t\t"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace(NULL), NULL));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace(""), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\nfoo"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\n"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\n\nfoo\n"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\n\n\n"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\tfoo"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\t"), ""));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\t\tfoo\t"), "foo"));
+    ud_ut_test(!ud_str_cmp(ud_str_whitespace("\t\t\t"), ""));
     
+    ud_str_cpy(abcdef, aaaaaa);
+    ud_str_cpy(abc, NULL); // test segfault
+    ud_str_cpy(NULL, abc); // test segfault
+
+    ud_ut_test(!ud_str_cmp(abcdef, aaaaaa));
+
+    char *split = "aFOObFOOcdcdecFOOdwqdFOFOOFO";
+    char **splitted = ud_str_split(split, "FOO");
+    char **splitted_verif = ud_ut_array(char *, "a", "b", "cdcdec", "dwqdFO", "FO");
+    char **splitted2 = ud_str_split("abc", " ");
+
+    for (ud_ut_count i = 0; i < 5; ++i)
+        ud_ut_dtest(!ud_str_cmp(splitted[i], splitted_verif[i]), "[%zu] %s %s", i, splitted[i], splitted_verif[i]);
+    ud_ut_test(ud_str_split(NULL, "a") == NULL);
+    ud_ut_test(ud_ptr_len(splitted2) == 1);
+    ud_ut_test(!ud_str_cmp(splitted2[0], abc));
+    ud_ut_test(1 && ud_str_split("abc", NULL)); // should exit with ud_ut_error
 }
 
 int main(void)

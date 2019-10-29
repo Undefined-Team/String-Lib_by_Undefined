@@ -7,6 +7,7 @@ char    *ud_str_join_ctr(char **str, char *sep, ud_bool need_free)
     size_t total_len = 0;
     char **str_tmp = str;
     size_t str_nbr = ud_ptr_len((void**)str);
+    if (!str_nbr) return NULL;
     while (*str_tmp) total_len += ud_str_len(*str_tmp++);
     total_len += sep_len * (str_nbr - 1);
     char *res;
@@ -41,9 +42,9 @@ char    *ud_str_join_ctr(char **str, char *sep, ud_bool need_free)
 
 char    *ud_str_rjoin_ctr(char **str, char **sep, ud_bool need_free)
 {
-    ++sep;
+    if (sep) ++sep;
     char **str_tmp = str;
-    if (*sep)
+    if (sep && *sep)
     {
         if (!need_free)
         {
@@ -58,5 +59,5 @@ char    *ud_str_rjoin_ctr(char **str, char **sep, ud_bool need_free)
         for (; *str_tmp; ++str_tmp)
             *str_tmp = ud_str_rjoin_ctr((char**)*str_tmp, sep, true);
     }
-    return ud_str_join_ctr(str, *(sep - 1), need_free);
+    return ud_str_join_ctr(str, sep ? *(sep - 1) : NULL, need_free);
 }
