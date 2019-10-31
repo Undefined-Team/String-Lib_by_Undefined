@@ -134,10 +134,17 @@ void ud_str_test_tmp(void)
     ud_ut_test(ud_ptr_len(splitted2) == 1);
     ud_ut_test(!ud_str_cmp(splitted2[0], abc));
     ud_ut_test(1 && ud_str_split("abc", NULL)); // should exit with ud_ut_error
+
+    // split sep = "" split chaque char
+
 }
 
 int main(void)
 {
+    char *split = "abc";
+    char **splitted = ud_str_split(split, "");
+    printf("LAUNCH %zd\n", ud_ptr_len(splitted));
+    ud_ptr_foreach(splitted, elem, printf("TEST = %s\n", *elem););
     // char *a = "a";
     // char *abc = "abc";
     // char *de = "de";

@@ -37,7 +37,6 @@
 # define ud_str_vrfjoin(_str, ...)          ({ char *_sep[] = {__VA_ARGS__, NULL}; ud_str_rfjoin(_str, _sep); })
 
 // Structures
-
 ud_list_struct(ud_str_split_len, size_t len);
 /*
 typedef struct                      sud_str_split_len {

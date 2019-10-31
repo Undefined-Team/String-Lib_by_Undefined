@@ -6,23 +6,25 @@ static int                  ud_str_cmp_ofst(char **p1, char *p2, size_t *offset)
 {
     unsigned char *s1 = *(unsigned char**)p1;
     unsigned char *s2 = (unsigned char*)p2;
-    *offset = 1;
+    size_t new_off = 0;
     while (*s1 && *s2 && *s1 == *s2)
     {
         ++s1;
         ++s2;
-        ++(*offset);
+        ++new_off;
     }
-    *p1 = (char*)s1;
+    *offset = new_off + (new_off == 0);
+    *p1 = (char*)s1 + ((char*)s1 == *p1);
     if (!*s2) return 0;
     return *s1 - *s2;
 }
 
 ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len)
 {
-    ud_str_split_len    *begin = ud_list_init(ud_str_split_len, len = 0);
-    ud_str_split_len  *tmp    = begin;
+    ud_str_split_len  *begin    = ud_list_init(ud_str_split_len, len = 0);
+    ud_str_split_len  *tmp      = begin;
     size_t            offset;
+    size_t            split_len_tmp = 0;
     ud_ut_count i = 0;
     while (*val)
     {
@@ -30,14 +32,12 @@ ud_str_split_len   *ud_str_split_get_len(char *val, char *sep, size_t *split_len
         {
             tmp = ud_list_push(tmp, len = i);
             i = 0;
-            ++(*split_len);
+            ++split_len_tmp;
         }
         else
-        {
             i += offset;
-            ++val;
-        }
     }
+    *split_len = split_len_tmp;
     tmp = ud_list_push(tmp, len = i);
     ++(*split_len);
     return begin;
@@ -53,7 +53,13 @@ char                        **ud_str_split(char *str, char *sep)
         ret[1] = NULL;
         return ret;
     }
-    else if (!sep || !*sep) ud_ut_error("Separator can't be null");
+    else if (!sep || !*sep)
+    {
+        size_t len = ud_str_len(str);
+        char **ret = ud_ptr_init(char*, len);
+        for (char **elem = ret; len-- > 0; ) *elem++ = ud_ut_array(char, *str++, '\0');
+        return ret;
+    }
     size_t              split_len   = 0;
     size_t              sep_len     = ud_str_len(sep);
     ud_str_split_len    *begin      = ud_str_split_get_len(str, sep, &split_len);
