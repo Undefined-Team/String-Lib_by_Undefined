@@ -7,17 +7,17 @@
 #include <ud_list.h>
 
 // Macro
-# define ud_str_is_white_space(c)           ((c) == ' ' || (c) == '\t' || (c) == '\n' || (c) == '\v' || (c) == '\f' || (c) == '\0')
-# define ud_str_dup(str)                    ud_str_ndup(str, 0)
-# define ud_str_fdup(str)                   ud_str_fndup(str, 0)
-# define ud_str_cpy_rd(dst, src)            ud_str_cpy_rd_ctr(&(dst), src)
+# define ud_str_is_white_space(_c)          ({ __auto_type _ct = _c; ((_ct) == ' ' || (_ct) == '\t' || (_ct) == '\n' || (_ct) == '\v' || (_ct) == '\f' || (_ct) == '\0'); })
+# define ud_str_dup(_str)                   ud_str_ndup(_str, 0)
+# define ud_str_fdup(_str)                  ud_str_fndup(_str, 0)
+# define ud_str_cpy_rd(_dst, _src)          ud_str_cpy_rd_ctr(&(_dst), _src)
 
-# define ud_str_escape(str)                 ud_str_escape_ctr(str, false)
-# define ud_str_fescape(str)                ud_str_escape_ctr(str, true)
+# define ud_str_escape(_str)                ud_str_escape_ctr(_str, false)
+# define ud_str_fescape(_str)               ud_str_escape_ctr(_str, true)
 
-# define ud_str_trim(str, trim)             ud_str_trim_ctr(str, trim, false)
-# define ud_str_ftrim(str, trim)            ud_str_trim_ctr(str, trim, true)
-# define ud_str_rtrim(str, depth, trim)     ud_str_rtrim_ctr((char**)(str), depth, trim)
+# define ud_str_trim(_str, _trim)           ud_str_trim_ctr(_str, _trim, false)
+# define ud_str_ftrim(_str, _trim)          ud_str_trim_ctr(_str, _trim, true)
+# define ud_str_rtrim(_str, _depth, _trim)  ud_str_rtrim_ctr((char**)(_str), _depth, _trim)
 
 # define ud_str_vtrim(_str, ...)            ({ char *_trim[] = {__VA_ARGS__, NULL}; ud_str_trim(_str, _trim); })
 # define ud_str_vftrim(_str, ...)           ({ char *_trim[] = {__VA_ARGS__, NULL}; ud_str_ftrim(_str, _trim); }) 
@@ -25,13 +25,13 @@
 
 # define ud_str_vrsplit(_str, ...)          ({ char *_sep[] = {__VA_ARGS__, NULL}; ud_str_rsplit(_str, _sep); })
 
-# define ud_str_join(str, sep)              ud_str_join_ctr(str, sep, false)
-# define ud_str_fjoin(str, sep)             ud_str_join_ctr(str, sep, true)
+# define ud_str_join(_str, _sep)            ud_str_join_ctr(_str, _sep, false)
+# define ud_str_fjoin(_str, _sep)           ud_str_join_ctr(_str, _sep, true)
 # define ud_str_vjoin(_sep, ...)            ({ char *_str[] = {__VA_ARGS__, NULL}; ud_str_join(_str, _sep); })
 # define ud_str_vfjoin(_sep, ...)           ({ char **_str = ud_ut_array(char *, __VA_ARGS__, NULL); ud_str_fjoin(_str, _sep); })
 
-# define ud_str_rjoin(str, sep)             ud_str_rjoin_ctr((char**)(str), sep, false)
-# define ud_str_rfjoin(str, sep)            ud_str_rjoin_ctr((char**)(str), sep, true)
+# define ud_str_rjoin(_str, _sep)           ud_str_rjoin_ctr((char**)(_str), _sep, false)
+# define ud_str_rfjoin(_str, _sep)          ud_str_rjoin_ctr((char**)(_str), _sep, true)
 
 # define ud_str_vrjoin(_str, ...)           ({ char *_sep[] = {__VA_ARGS__, NULL}; ud_str_rjoin(_str, _sep); })
 # define ud_str_vrfjoin(_str, ...)          ({ char *_sep[] = {__VA_ARGS__, NULL}; ud_str_rfjoin(_str, _sep); })

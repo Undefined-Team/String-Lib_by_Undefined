@@ -141,10 +141,12 @@ void ud_str_test_tmp(void)
 
 int main(void)
 {
-    char *split = "abc";
-    char **splitted = ud_str_split(split, "");
-    printf("LAUNCH %zd\n", ud_ptr_len(splitted));
-    ud_ptr_foreach(splitted, elem, printf("TEST = %s\n", *elem););
+    char *split2 = "abc";
+    char **splitted2 = ud_str_split(split2 , "");
+    printf("LAUNCH %zd\n", ud_ptr_len(splitted2));
+    ud_ptr_foreach(splitted2, elem, printf("TEST = %s\n", *elem););
+    printf("%s\n", ud_str_join(splitted2, NULL));
+    return 0;
     // char *a = "a";
     // char *abc = "abc";
     // char *de = "de";
